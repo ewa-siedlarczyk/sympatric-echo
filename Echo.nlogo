@@ -177,10 +177,10 @@ end
 ;; there is an equal chance of it being either one.  When the tags are different lengths,
 ;; the additional letters are just appended on to the tage of the offspring.
 to-report cross [tag1 tag2]
-  if length tag1 > length tag2
-    [ report sentence cross sublist tag1 0 length tag2 tag2 sublist tag1 length tag2 length tag1 ]
-  if length tag2 > length tag1
-    [ report sentence cross tag1 sublist tag2 0 length tag1 sublist tag2 length tag1 length tag2 ]
+;;  if length tag1 > length tag2
+;;    [ report sentence cross sublist tag1 0 length tag2 tag2 sublist tag1 length tag2 length tag1 ]
+;;  if length tag2 > length tag1
+;;    [ report sentence cross tag1 sublist tag2 0 length tag1 sublist tag2 length tag1 length tag2 ]
   report (map [ [t1 t2] -> one-of (list t1 t2)] tag1 tag2)
 end
 
@@ -226,10 +226,10 @@ end
 ;; is ultimately used to help determine how resources are transferred between agents
 ;; or the extent to which a potential mate matches an agent's mating conditions
 to-report match-score [tag1 tag2]
-  if length tag1 > length tag2
-    [ report (length tag2 - length tag1) + match-score sublist tag1 0 length tag2 tag2 ]
-  if length tag2 > length tag1
-    [ report (length tag1 - length tag2) + match-score tag1 sublist tag2 0 length tag1 ]
+;;  if length tag1 > length tag2
+;;    [ report (length tag2 - length tag1) + match-score sublist tag1 0 length tag2 tag2 ]
+;;  if length tag2 > length tag1
+;;    [ report (length tag1 - length tag2) + match-score tag1 sublist tag2 0 length tag1 ]
   report sum (map [ [letter1 letter2] ->
     ifelse-value letter1 = letter2 [2] [-2]
   ] tag1 tag2)
