@@ -60,13 +60,14 @@ to setup-patches
 end
 
 to setup-creatures
+  let initial-tag one-of all-tags
   create-turtles init-num-creatures
   [
     setxy random-xcor random-ycor
     set offense one-of all-tags
     set defense one-of all-tags
-    set mating one-of all-tags
     set size 0.5   ;; since the patch size is so big make the turtles smaller
+    set mating initial-tag
     set energy random energy-threshold
     recolor-turtle
   ]
