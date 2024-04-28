@@ -2,6 +2,7 @@ globals [
   energy-threshold    ;; minimum amount of energy needed by creatures to reproduce
   all-tags            ;; sorted list of all possible tags
   tag-length
+  tag-letters         ;; allowed letters in tags
 ]
 
 patches-own [
@@ -20,6 +21,7 @@ to setup
   clear-all
   set energy-threshold 100
   set tag-length 5  ;; length of the tags
+  set tag-letters ["a" "b"]
   setup-all-tags-list
   setup-patches
   setup-creatures
@@ -29,7 +31,7 @@ end
 ;; Creates a list of all possible tags (of variable length as per tag-length)
 to setup-all-tags-list
   set all-tags []
-  let tag-elements ["a" "b"] ;; w Echo było jeszcze "c"
+  let tag-elements tag-letters
 
   ;; Generate all combinations of tag-elements with length tag-length
   set all-tags create-tags tag-elements tag-length
@@ -187,7 +189,7 @@ to-report mutate [tag]
   report map [ letter ->
     ifelse-value random-float 100 >= mutation-rate
       [ letter ]
-      [ one-of remove letter ["a" "b" "c"] ]
+      [ one-of remove letter tag-letters ]
   ] tag
 end
 
