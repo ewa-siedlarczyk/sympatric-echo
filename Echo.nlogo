@@ -137,7 +137,7 @@ to move  ;; turtle procedure
   ifelse energy < 20
     [ die ]
     [ rt random-normal 0 20
-      fd random-float 1 ]
+      fd random turtle-speed / 10 ] ;; turtle-speed ustawiane suwakiem ;; proporcja do ustalenia
 end
 
 to replicate   ;; creature procedure
@@ -489,6 +489,21 @@ count turtles
 17
 1
 11
+
+SLIDER
+1022
+429
+1194
+462
+turtle-speed
+turtle-speed
+0
+100
+10.0
+1
+1
+NIL
+HORIZONTAL
 
 @#$#@#$#@
 ## WHAT IS IT?
