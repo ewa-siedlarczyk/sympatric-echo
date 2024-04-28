@@ -66,8 +66,8 @@ to setup-creatures
     setxy random-xcor random-ycor
     set offense one-of all-tags
     set defense one-of all-tags
-    set size 0.5   ;; since the patch size is so big make the turtles smaller
     set mating initial-tag
+    set size 1
     set energy random energy-threshold
     recolor-turtle
   ]
