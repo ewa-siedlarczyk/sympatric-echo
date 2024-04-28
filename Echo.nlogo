@@ -128,7 +128,7 @@ to grab-resources    ;; turtle procedure
   let fitness calculate-fitness count-a temperature
 
   if (energy < energy-threshold) and (well > 0) [
-    let resource-available well / unit-share * count-a
+    let resource-available well / count turtles-here
     let resource-extracted resource-available * fitness  ; Modify extraction based on fitness
 
     set energy energy + resource-extracted
