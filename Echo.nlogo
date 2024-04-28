@@ -24,16 +24,18 @@ to setup
   reset-ticks
 end
 
-;; Creates a list of all possible tags (of length 1, 2, or 3)
+;; Creates a list of all possible tags (of equal length)
 to setup-all-tags-list
   set all-tags []
-  let tag-elements ["a" "b" "c"]
+  let tag-elements ["a" "b" ] ;; w Echo było jeszcze "c"
   foreach tag-elements [ i ->
-    set all-tags lput (list i) all-tags
     foreach tag-elements [ j ->
-      set all-tags fput (list i j) all-tags
       foreach tag-elements [ k ->
-        set all-tags fput (list i j k) all-tags
+        foreach tag-elements [ l ->
+          foreach tag-elements [ m ->
+            set all-tags lput (list i j k l m) all-tags
+          ]
+        ]
       ]
     ]
   ]
