@@ -77,7 +77,7 @@ end
 
 to recolor-turtle  ;; turtle procedure
   set color tag-color mating
-  set label reduce [ [a b] -> word a b ] (sentence offense "." defense)
+  set label reduce [ [a b] -> word a b ] (sentence mating) ;; sentence mating "." offense "." defense
 end
 
 to-report tag-color [tag]
