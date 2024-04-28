@@ -1,6 +1,7 @@
 globals [
   energy-threshold    ;; minimum amount of energy needed by creatures to reproduce
   all-tags            ;; sorted list of all possible tags
+  tag-length
 ]
 
 patches-own [
@@ -18,28 +19,37 @@ turtles-own [
 to setup
   clear-all
   set energy-threshold 100
+  set tag-length 5  ;; length of the tags
   setup-all-tags-list
   setup-patches
   setup-creatures
   reset-ticks
 end
 
-;; Creates a list of all possible tags (of equal length)
+;; Creates a list of all possible tags (of variable length as per tag-length)
 to setup-all-tags-list
   set all-tags []
-  let tag-elements ["a" "b" ] ;; w Echo było jeszcze "c"
-  foreach tag-elements [ i ->
-    foreach tag-elements [ j ->
-      foreach tag-elements [ k ->
-        foreach tag-elements [ l ->
-          foreach tag-elements [ m ->
-            set all-tags lput (list i j k l m) all-tags
-          ]
-        ]
-      ]
+  let tag-elements ["a" "b"] ;; w Echo było jeszcze "c"
+
+  ;; Generate all combinations of tag-elements with length tag-length
+  set all-tags create-tags tag-elements tag-length
+end
+
+;; Recursive procedure to generate all combinations of elements with given length
+to-report create-tags [elements n]
+  if n = 0 [
+    report (list [])
+  ]
+  let shorter-tags create-tags elements (n - 1)
+  let all-combinations []
+  foreach elements [element ->
+    foreach shorter-tags [shorter-tag ->
+      set all-combinations lput fput element shorter-tag all-combinations
     ]
   ]
+  report all-combinations
 end
+
 
 to setup-patches
   ask patches [
