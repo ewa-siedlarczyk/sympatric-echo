@@ -3,11 +3,14 @@ globals [
   all-tags            ;; sorted list of all possible tags
   tag-length
   tag-letters         ;; allowed letters in tags
+  min-temperature
+  max-temperature
 ]
 
 patches-own [
   well      ;; the amount of resources a patch has
   max-well  ;; the max amount of resources for that patch
+  temperature
 ]
 
 turtles-own [
@@ -22,6 +25,8 @@ to setup
   set energy-threshold 100
   set tag-length 5  ;; length of the tags
   set tag-letters ["a" "b"]
+  set min-temperature -50
+  set max-temperature 50
   setup-all-tags-list
   setup-patches
   setup-creatures
@@ -54,7 +59,15 @@ end
 
 
 to setup-patches
+  let total-width (world-width - 1)
+
   ask patches [
+    ; Calculate the temperature based on the patch's x-coordinate.
+    ; Linearly interpolate between min-temp and max-temp.
+    let temp-range (max-temperature - min-temperature)
+    let normalized-x ((pxcor - min-pxcor) / total-width)
+    set temperature min-temperature + (temp-range * normalized-x)
+
     set max-well random 50
     set well max-well
     recolor-patch
@@ -85,7 +98,8 @@ to-report tag-color [tag]
 end
 
 to recolor-patch  ;; patch procedure
-   set pcolor scale-color green well 0 100
+  set pcolor scale-color green well 0 100
+  set plabel round temperature
 end
 
 to go
@@ -109,10 +123,31 @@ end
 ;; Get resources from the environment, if you need them.  You don't fight for these,
 ;; but instead they are shared with other agents in the same location.
 to grab-resources    ;; turtle procedure
+  let unit-share count turtles-here * tag-length
+  let count-a count-letter "a" mating
+  let fitness calculate-fitness count-a temperature
+
   if (energy < energy-threshold) and (well > 0) [
-    set energy energy + ( well / count turtles-here )
-    set well well - ( well / count turtles-here )
+    let resource-available well / unit-share * count-a
+    let resource-extracted resource-available * fitness  ; Modify extraction based on fitness
+
+    set energy energy + resource-extracted
+    set well well - resource-extracted
   ]
+end
+
+to-report calculate-fitness [gene-count current-temp]
+  ; gene-count is the number of 'a' genes influencing fitness for temperature
+  ; current-temp is the temperature of the patch where the turtle is
+  let optimal-temp (min-temperature + gene-count * (max-temperature - min-temperature) / tag-length)  ; Define the gene effect and baseline
+  let fitness 1 - (abs (current-temp - optimal-temp) / (max-temperature - min-temperature))
+  report max (list 0 fitness)  ; Ensure fitness does not go negative, correct usage of max
+end
+
+to-report count-letter [#letter #tag]
+  report reduce
+    [ [occurrence-count next-item] -> ifelse-value (next-item = #letter)
+        [occurrence-count + 1] [occurrence-count] ] (fput 0 #tag)
 end
 
 ;; Try to get resources from another agent at your location.
