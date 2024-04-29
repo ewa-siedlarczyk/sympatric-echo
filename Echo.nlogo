@@ -292,7 +292,7 @@ end
 GRAPHICS-WINDOW
 513
 10
-1886
+6536
 784
 -1
 -1
@@ -306,8 +306,8 @@ GRAPHICS-WINDOW
 1
 1
 1
--45
-45
+-200
+200
 -25
 25
 1
@@ -549,7 +549,7 @@ turtle-speed
 turtle-speed
 10
 100
-10.0
+15.0
 5
 1
 NIL
