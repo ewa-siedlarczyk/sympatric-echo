@@ -58,13 +58,15 @@ end
 
 to setup-patches
   let total-width (world-width - 1)
+  let mid-point (total-width / 2)
 
   ask patches [
     ; Calculate the temperature based on the patch's x-coordinate.
-    ; Linearly interpolate between min-temp and max-temp.
+    ; Create a symmetrical temperature distribution that peaks at the middle.
     let temp-range (max-temperature - min-temperature)
-    let normalized-x ((pxcor - min-pxcor) / total-width)
-    set temperature min-temperature + (temp-range * normalized-x)
+    let distance-to-mid abs((pxcor - min-pxcor) - mid-point)
+    let normalized-x (distance-to-mid / mid-point)
+    set temperature max-temperature - (temp-range * normalized-x)
 
     set max-well random 50
     set well max-well
@@ -279,7 +281,7 @@ end
 GRAPHICS-WINDOW
 513
 10
-2036
+1886
 784
 -1
 -1
@@ -293,8 +295,8 @@ GRAPHICS-WINDOW
 1
 1
 1
--50
-50
+-45
+45
 -25
 25
 1
