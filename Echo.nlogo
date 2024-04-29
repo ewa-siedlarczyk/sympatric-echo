@@ -168,7 +168,10 @@ to reproduce   ;; turtle procedure
 end
 
 to move  ;; turtle procedure
-  set energy energy - 1
+  let count-a count-letter "a" mating
+  let fitness calculate-fitness count-a temperature
+
+  set energy energy - (1 - fitness / 2)
   ifelse energy < 20
     [ die ]
     [ rt random-normal 0 20
