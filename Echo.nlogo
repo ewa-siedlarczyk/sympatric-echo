@@ -3,8 +3,6 @@ globals [
   all-tags            ;; sorted list of all possible tags
   tag-length
   tag-letters         ;; allowed letters in tags
-  min-temperature
-  max-temperature
   min-fitness
 ]
 
@@ -26,8 +24,6 @@ to setup
   set energy-threshold 100
   set tag-length 5  ;; length of the tags
   set tag-letters ["a" "b"]
-  set min-temperature -50
-  set max-temperature 50
   set min-fitness 0.01
   setup-all-tags-list
   setup-patches
@@ -174,7 +170,7 @@ to move  ;; turtle procedure
   ifelse energy < 20
     [ die ]
     [ rt random-normal 0 20
-      fd random turtle-speed / 10 ] ;; turtle-speed ustawiane suwakiem ;; proporcja do ustalenia
+      fd random turtle-speed / 100 ] ;; turtle-speed ustawiane suwakiem ;; proporcja do ustalenia
 end
 
 to replicate   ;; creature procedure
@@ -535,15 +531,45 @@ count turtles
 11
 
 SLIDER
-140
-747
-312
-780
+4
+683
+176
+716
 turtle-speed
 turtle-speed
-0
+10
 100
-2.0
+100.0
+5
+1
+NIL
+HORIZONTAL
+
+SLIDER
+4
+650
+176
+683
+min-temperature
+min-temperature
+-100
+-1
+-50.0
+1
+1
+NIL
+HORIZONTAL
+
+SLIDER
+176
+650
+348
+683
+max-temperature
+max-temperature
+1
+100
+51.0
 1
 1
 NIL
