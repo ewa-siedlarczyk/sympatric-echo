@@ -185,8 +185,16 @@ end
 
 ;; Creates offspring from mating, including selective mating
 to reproduce-match [agent1 agent2]
-  if ( [energy] of agent1 > energy-threshold ) and
-     ( [energy] of agent2 > energy-threshold )
+  let count-a-agent1 count-letter "a" [mating] of agent1
+  let count-a-agent2 count-letter "a" [mating] of agent2
+
+  ;; Calculate fitness based on the 'a' count and an environmental temperature variable
+  let fitness1 max (list min-fitness (calculate-fitness count-a-agent1 temperature))
+  let fitness2 max (list min-fitness (calculate-fitness count-a-agent2 temperature))
+
+
+  if ( [energy] of agent1 * fitness1 > energy-threshold ) and
+     ( [energy] of agent2 * fitness2 > energy-threshold )
   [
     if (not selective-mating?) or
 ;;        ( ( match-score [mating] of agent1 [offense] of agent2 > mating-selectivity ) and
@@ -202,8 +210,8 @@ to reproduce-match [agent1 agent2]
         set energy random-normal 50 20
         recolor-turtle
       ]
-      ask agent1 [ set energy energy / 2 ]
-      ask agent2 [ set energy energy / 2 ]
+      ask agent1 [ set energy energy / (2 - fitness1 / 2) ]
+      ask agent2 [ set energy energy / (2 - fitness2 / 2) ]
     ]
   ]
 end
