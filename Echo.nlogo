@@ -189,7 +189,7 @@ to reproduce-match [agent1 agent2]
     if (not selective-mating?) or
 ;;        ( ( match-score [mating] of agent1 [offense] of agent2 > mating-selectivity ) and
 ;;          ( match-score [mating] of agent2 [offense] of agent1 > mating-selectivity ) )
-       (match-score [mating] of agent1 [mating] of agent2 > mating-selectivity)
+       (abs (count-letter "b" [mating] of agent1 - count-letter "b" [mating] of agent2) < mating-selectivity)
     [
       hatch 1
       [
@@ -267,7 +267,9 @@ end
 ;; is ultimately used to help determine how resources are transferred between agents
 ;; or the extent to which a potential mate matches an agent's mating conditions
 to-report match-score [tag1 tag2]
-  report abs (count-letter "b" tag1 - count-letter "b" tag2)
+  report sum (map [ [letter1 letter2] ->
+    ifelse-value letter1 = letter2 [2] [-2]
+  ] tag1 tag2)
 end
 
 
@@ -508,7 +510,7 @@ mating-selectivity
 mating-selectivity
 -6
 6
-0.0
+1.0
 1
 1
 NIL
@@ -534,7 +536,7 @@ turtle-speed
 turtle-speed
 10
 100
-100.0
+10.0
 5
 1
 NIL
