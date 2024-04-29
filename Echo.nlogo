@@ -5,6 +5,7 @@ globals [
   tag-letters         ;; allowed letters in tags
   min-temperature
   max-temperature
+  min-fitness
 ]
 
 patches-own [
@@ -27,6 +28,7 @@ to setup
   set tag-letters ["a" "b"]
   set min-temperature -50
   set max-temperature 50
+  set min-fitness 0.01
   setup-all-tags-list
   setup-patches
   setup-creatures
@@ -228,23 +230,30 @@ to-report mutate [tag]
   ] tag
 end
 
-;; This procedure determines how resources are transferred between
-;; agents.  The offense tag of an agent1 is matched with the defense
-;; tag of agent 2, and the offense tag of agent2 is matched with the
-;; defense tag of agent1.
+;; This procedure determines how resources are transferred between agents based on offense-defense
+;; matching and fitness levels, with safety for zero fitness.
 to match-off-def [agent1 agent2]
+  ;; Match respective offense and defense tags
+  let a1a2 match-score [offense] of agent1 [defense] of agent2
+  let a2a1 match-score [offense] of agent2 [defense] of agent1
 
-  ;; match respective offense and defense tags
-  let a1a2 match-score [offense] of agent1  [defense] of agent2
-  let a2a1 match-score [offense] of agent2  [defense] of agent1
+  ;; Count occurrences of 'a' in the mating tags for additional fitness calculation
+  let count-a-agent1 count-letter "a" [mating] of agent1
+  let count-a-agent2 count-letter "a" [mating] of agent2
 
-  ;; scale resulting scores so that all values are positive
+  ;; Calculate fitness based on the 'a' count and an environmental temperature variable
+  let fitness1 max (list min-fitness (calculate-fitness count-a-agent1 temperature))
+  let fitness2 max (list min-fitness (calculate-fitness count-a-agent2 temperature))
+
+  ;; Incorporate fitness into the match scores
+  set a1a2 (a1a2 * fitness1) / fitness2
+  set a2a1 (a2a1 * fitness2) / fitness1
+
+  ;; Ensure all values are positive and appropriately scaled
   set a1a2 a1a2 + 6
   set a2a1 a2a1 + 6
 
-  ;; Determine how much resource is transferred between the agents.
-  ;; Each agent takes from the other based on the relative magnitude
-  ;; of its match score
+  ;; Determine the resource transfer, influenced by scaled match scores and agent energy levels
   set a1a2 (a1a2 / 12) * ([energy] of agent2)
   set a2a1 (a2a1 / 12) * ([energy] of agent1)
 
