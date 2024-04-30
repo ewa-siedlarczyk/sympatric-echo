@@ -93,11 +93,16 @@ to setup-creatures
 end
 
 to recolor-turtle  ;; turtle procedure
-  set color tag-color mating
+  set color species-color mating
   set label reduce [ [a b] -> word a b ] (sentence mating) ;; sentence mating "." offense "." defense
 end
 
 to-report tag-color [tag]
+  let a-count count-letter "a" tag
+  report 5 + 10 * a-count
+end
+
+to-report species-color [tag]
   ifelse count-letter "a" mating >= 3
     [report 15]
     [report 45]
@@ -348,10 +353,10 @@ NIL
 0
 
 SLIDER
-329
-102
-504
-135
+192
+138
+340
+171
 replenish-speed
 replenish-speed
 0
@@ -363,10 +368,10 @@ NIL
 HORIZONTAL
 
 SLIDER
-329
-68
-504
-101
+12
+139
+187
+172
 replicate-chance
 replicate-chance
 0
@@ -416,10 +421,10 @@ PENS
 "default" 1.0 1 -16777216 true "" ";; The HISTOGRAM primitive doesn't support giving different bars\n;; different colors, so we roll our own histogramming code here.\nplot-pen-reset\nforeach all-tags [ the-tag ->\n  set-plot-pen-color tag-color the-tag\n  plot count turtles with [ mating = the-tag ]\n]"
 
 SLIDER
-329
-136
-504
-169
+345
+139
+505
+172
 mutation-rate
 mutation-rate
 0
@@ -486,10 +491,10 @@ PENS
 "default" 1.0 1 -16777216 true "" "histogram [position defense all-tags] of turtles"
 
 SLIDER
-137
-136
-322
-169
+12
+96
+187
+129
 mating-selectivity
 mating-selectivity
 0
@@ -501,21 +506,21 @@ NIL
 HORIZONTAL
 
 MONITOR
-407
-266
-501
-311
-total pop.
+347
+343
+504
+388
+total population
 count turtles
 17
 1
 11
 
 SLIDER
-5
-788
-177
-821
+11
+59
+187
+92
 turtle-speed
 turtle-speed
 10
@@ -527,10 +532,10 @@ NIL
 HORIZONTAL
 
 SLIDER
-5
-755
-177
-788
+190
+59
+366
+92
 min-temperature
 min-temperature
 -100
@@ -542,10 +547,10 @@ NIL
 HORIZONTAL
 
 SLIDER
-177
-755
-349
-788
+191
+96
+366
+129
 max-temperature
 max-temperature
 1
@@ -555,6 +560,28 @@ max-temperature
 1
 NIL
 HORIZONTAL
+
+MONITOR
+347
+388
+504
+433
+population of species 1
+count turtles with [tag-color mating = 15]
+17
+1
+11
+
+MONITOR
+347
+433
+504
+478
+population of species 2
+count turtles with [tag-color mating = 45]
+17
+1
+11
 
 @#$#@#$#@
 ## WHAT IS IT?
