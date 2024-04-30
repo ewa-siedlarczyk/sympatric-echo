@@ -307,8 +307,8 @@ SLIDER
 init-num-creatures
 init-num-creatures
 100
-1000
-1000.0
+10000
+5000.0
 1
 1
 NIL
@@ -357,7 +357,7 @@ replenish-speed
 replenish-speed
 0
 5
-1.0
+0.5
 0.1
 1
 NIL
@@ -504,9 +504,9 @@ SLIDER
 169
 mating-selectivity
 mating-selectivity
--6
+0
 6
-1.0
+2.0
 1
 1
 NIL
@@ -562,7 +562,7 @@ max-temperature
 max-temperature
 1
 100
-51.0
+50.0
 1
 1
 NIL
