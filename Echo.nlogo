@@ -185,15 +185,13 @@ to replicate   ;; creature procedure
   ]
 end
 
-;; Creates offspring from mating, including selective mating
+;; Creates offspring from mating, taking into account mating selectivity
 to reproduce-match [agent1 agent2]
   if ( [energy] of agent1 * [fitness] of agent1 > energy-threshold ) and
      ( [energy] of agent2 * [fitness] of agent2 > energy-threshold )
   [
-    if (not selective-mating?) or
-;;        ( ( match-score [mating] of agent1 [offense] of agent2 > mating-selectivity ) and
-;;          ( match-score [mating] of agent2 [offense] of agent1 > mating-selectivity ) )
-       (abs (count-letter "b" [mating] of agent1 - count-letter "b" [mating] of agent2) < mating-selectivity)
+    if (abs (count-letter "b" [mating] of agent1 - count-letter "b" [mating] of agent2) <= (abs(mating-selectivity - 5)))
+    ;; (abs(mating-selectivity - 5)) applied so low value of mating-selectivity corresponds to high tolerance for mating-tag differences
     [
       hatch 1
       [
@@ -432,17 +430,6 @@ mutation-rate
 %
 HORIZONTAL
 
-SWITCH
-137
-102
-322
-135
-selective-mating?
-selective-mating?
-0
-1
--1000
-
 PLOT
 4
 175
@@ -506,8 +493,8 @@ SLIDER
 mating-selectivity
 mating-selectivity
 0
-6
-2.0
+5
+5.0
 1
 1
 NIL
