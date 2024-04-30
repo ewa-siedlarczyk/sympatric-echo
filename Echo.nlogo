@@ -18,6 +18,7 @@ turtles-own [
   defense   ;; defense tag
   mating    ;; mating tag (can be thought of as identifying a species)
   fitness
+  ;;num-of-a-letters
 ]
 
 to setup
@@ -177,9 +178,9 @@ to move  ;; turtle procedure
 end
 
 to replicate   ;; creature procedure
-  if energy > energy-threshold and random-float 100 < replicate-chance
+  if energy * fitness > energy-threshold and random-float 100 < replicate-chance
   [
-    set energy energy / 2  ;; give half of your energy to your offspring
+    set energy energy / (2 - fitness / 2)  ;; give half of your energy to your offspring
     hatch 1
   ]
 end
