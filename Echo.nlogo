@@ -134,8 +134,6 @@ end
 ;; Get resources from the environment, if you need them.  You don't fight for these,
 ;; but instead they are shared with other agents in the same location.
 to grab-resources    ;; turtle procedure
-  let unit-share count turtles-here * tag-length
-
   if (energy < energy-threshold) and (well > 0) [
     let resource-available well / count turtles-here
     let resource-extracted resource-available * fitness  ; Modify extraction based on fitness
