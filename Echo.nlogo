@@ -93,13 +93,14 @@ to setup-creatures
 end
 
 to recolor-turtle  ;; turtle procedure
-  set color 5 + 10 * letter-a-count
+  set color tag-color mating
   set label reduce [ [a b] -> word a b ] (sentence mating) ;; sentence mating "." offense "." defense
 end
 
 to-report tag-color [tag]
-  let a-count count-letter "a" tag
-  report 5 + 10 * a-count
+  ifelse count-letter "a" mating >= 3
+    [report 15]
+    [report 45]
 end
 
 to recolor-patch  ;; patch procedure
