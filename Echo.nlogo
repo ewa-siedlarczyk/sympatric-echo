@@ -17,6 +17,7 @@ turtles-own [
   offense   ;; offense tag
   defense   ;; defense tag
   mating    ;; mating tag (can be thought of as identifying a species)
+  fitness
 ]
 
 to setup
@@ -84,6 +85,7 @@ to setup-creatures
     set mating initial-tag
     set size 1
     set energy random energy-threshold
+    update-fitness
     recolor-turtle
   ]
 end
@@ -109,9 +111,17 @@ to go
   ask turtles [ fight ]
   ask turtles [ reproduce ]
   ask turtles [ move ]
+  ask turtles [ update-fitness ]
   ask turtles [ replicate ]
   ask patches [ recolor-patch ]
   tick
+end
+
+to update-fitness ;; turtle procedure
+  let gene-count count-letter "a" mating
+  let optimal-temp (min-temperature + gene-count * (max-temperature - min-temperature) / tag-length)  ; Define the gene effect and baseline
+  let calculated-fitness 1 - (abs (temperature - optimal-temp) / (max-temperature - min-temperature))
+  set fitness max (list 0 calculated-fitness)  ; Ensure fitness does not go negative, correct usage of max
 end
 
 to replenish  ;; patch procedure
@@ -124,8 +134,6 @@ end
 ;; but instead they are shared with other agents in the same location.
 to grab-resources    ;; turtle procedure
   let unit-share count turtles-here * tag-length
-  let count-a count-letter "a" mating
-  let fitness calculate-fitness count-a temperature
 
   if (energy < energy-threshold) and (well > 0) [
     let resource-available well / count turtles-here
@@ -134,14 +142,6 @@ to grab-resources    ;; turtle procedure
     set energy energy + resource-extracted
     set well well - resource-extracted
   ]
-end
-
-to-report calculate-fitness [gene-count current-temp]
-  ; gene-count is the number of 'a' genes influencing fitness for temperature
-  ; current-temp is the temperature of the patch where the turtle is
-  let optimal-temp (min-temperature + gene-count * (max-temperature - min-temperature) / tag-length)  ; Define the gene effect and baseline
-  let fitness 1 - (abs (current-temp - optimal-temp) / (max-temperature - min-temperature))
-  report max (list 0 fitness)  ; Ensure fitness does not go negative, correct usage of max
 end
 
 to-report count-letter [#letter #tag]
@@ -168,8 +168,6 @@ to reproduce   ;; turtle procedure
 end
 
 to move  ;; turtle procedure
-  let count-a count-letter "a" mating
-  let fitness calculate-fitness count-a temperature
 
   set energy energy - (1 - fitness / 2)
   ifelse energy < 20
@@ -188,16 +186,8 @@ end
 
 ;; Creates offspring from mating, including selective mating
 to reproduce-match [agent1 agent2]
-  let count-a-agent1 count-letter "a" [mating] of agent1
-  let count-a-agent2 count-letter "a" [mating] of agent2
-
-  ;; Calculate fitness based on the 'a' count and an environmental temperature variable
-  let fitness1 max (list min-fitness (calculate-fitness count-a-agent1 temperature))
-  let fitness2 max (list min-fitness (calculate-fitness count-a-agent2 temperature))
-
-
-  if ( [energy] of agent1 * fitness1 > energy-threshold ) and
-     ( [energy] of agent2 * fitness2 > energy-threshold )
+  if ( [energy] of agent1 * [fitness] of agent1 > energy-threshold ) and
+     ( [energy] of agent2 * [fitness] of agent2 > energy-threshold )
   [
     if (not selective-mating?) or
 ;;        ( ( match-score [mating] of agent1 [offense] of agent2 > mating-selectivity ) and
@@ -213,8 +203,8 @@ to reproduce-match [agent1 agent2]
         set energy random-normal 50 20
         recolor-turtle
       ]
-      ask agent1 [ set energy energy / (2 - fitness1 / 2) ]
-      ask agent2 [ set energy energy / (2 - fitness2 / 2) ]
+      ask agent1 [ set energy energy / (2 - [fitness] of agent1 / 2) ]
+      ask agent2 [ set energy energy / (2 - [fitness] of agent2 / 2) ]
     ]
   ]
 end
@@ -247,17 +237,9 @@ to match-off-def [agent1 agent2]
   let a1a2 match-score [offense] of agent1 [defense] of agent2
   let a2a1 match-score [offense] of agent2 [defense] of agent1
 
-  ;; Count occurrences of 'a' in the mating tags for additional fitness calculation
-  let count-a-agent1 count-letter "a" [mating] of agent1
-  let count-a-agent2 count-letter "a" [mating] of agent2
-
-  ;; Calculate fitness based on the 'a' count and an environmental temperature variable
-  let fitness1 max (list min-fitness (calculate-fitness count-a-agent1 temperature))
-  let fitness2 max (list min-fitness (calculate-fitness count-a-agent2 temperature))
-
   ;; Incorporate fitness into the match scores
-  set a1a2 (a1a2 * fitness1) / fitness2
-  set a2a1 (a2a1 * fitness2) / fitness1
+  set a1a2 (a1a2 * [fitness] of agent1) / [fitness] of agent2
+  set a2a1 (a2a1 * [fitness] of agent2) / [fitness] of agent1
 
   ;; Ensure all values are positive and appropriately scaled
   set a1a2 a1a2 + 6
