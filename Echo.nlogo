@@ -122,7 +122,7 @@ to update-fitness ;; turtle procedure
   let gene-count count-letter "a" mating
   let optimal-temp (min-temperature + gene-count * (max-temperature - min-temperature) / tag-length)  ; Define the gene effect and baseline
   let calculated-fitness 1 - (abs (temperature - optimal-temp) / (max-temperature - min-temperature))
-  set fitness max (list 0 calculated-fitness)  ; Ensure fitness does not go negative, correct usage of max
+  set fitness max (list min-fitness calculated-fitness)  ; Ensure fitness does not go negative or zero
 end
 
 to replenish  ;; patch procedure
