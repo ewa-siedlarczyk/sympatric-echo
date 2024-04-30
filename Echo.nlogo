@@ -18,7 +18,7 @@ turtles-own [
   defense   ;; defense tag
   mating    ;; mating tag (can be thought of as identifying a species)
   fitness
-  ;;num-of-a-letters
+  letter-a-count
 ]
 
 to setup
@@ -86,6 +86,7 @@ to setup-creatures
     set mating initial-tag
     set size 1
     set energy random energy-threshold
+    set letter-a-count count-letter "a" mating
     update-fitness
     recolor-turtle
   ]
@@ -119,8 +120,7 @@ to go
 end
 
 to update-fitness ;; turtle procedure
-  let gene-count count-letter "a" mating
-  let optimal-temp (min-temperature + gene-count * (max-temperature - min-temperature) / tag-length)  ; Define the gene effect and baseline
+  let optimal-temp (min-temperature + letter-a-count * (max-temperature - min-temperature) / tag-length)  ; Define the gene effect and baseline
   let calculated-fitness 1 - (abs (temperature - optimal-temp) / (max-temperature - min-temperature))
   set fitness max (list min-fitness calculated-fitness)  ; Ensure fitness does not go negative or zero
 end
@@ -202,6 +202,7 @@ to reproduce-match [agent1 agent2]
         set defense mutate cross [defense] of agent1 [defense] of agent2
         setxy random-xcor random-ycor
         set energy random-normal 50 20
+        set letter-a-count count-letter "a" mating
         recolor-turtle
       ]
       ask agent1 [ set energy energy / (2 - [fitness] of agent1 / 2) ]
