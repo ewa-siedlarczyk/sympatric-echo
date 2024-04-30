@@ -399,11 +399,11 @@ PENS
 "defense" 1.0 0 -2064490 true "" "plot length remove-duplicates [defense] of turtles"
 
 PLOT
-345
-342
+4
+618
 505
-479
-Species Counts
+755
+Gene Combinations Counts
 NIL
 NIL
 0.0
@@ -524,10 +524,10 @@ count turtles
 11
 
 SLIDER
-4
-683
-176
-716
+5
+788
+177
+821
 turtle-speed
 turtle-speed
 10
@@ -539,10 +539,10 @@ NIL
 HORIZONTAL
 
 SLIDER
-4
-650
-176
-683
+5
+755
+177
+788
 min-temperature
 min-temperature
 -100
@@ -554,10 +554,10 @@ NIL
 HORIZONTAL
 
 SLIDER
-176
-650
-348
-683
+177
+755
+349
+788
 max-temperature
 max-temperature
 1
