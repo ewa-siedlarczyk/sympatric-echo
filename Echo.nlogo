@@ -110,7 +110,9 @@ end
 
 to recolor-patch  ;; patch procedure
   set pcolor scale-color green well 0 100
-  set plabel round temperature
+  if pycor = max-pycor [  ;; Check if the patch is in the first row
+    set plabel round temperature  ;; Label only for the first row
+  ]
 end
 
 to go
