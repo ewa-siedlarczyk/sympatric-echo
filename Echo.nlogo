@@ -205,7 +205,7 @@ to reproduce-match [agent1 agent2]
         set mating mutate cross [mating] of agent1 [mating] of agent2
         set offense mutate cross [offense] of agent1 [offense] of agent2
         set defense mutate cross [defense] of agent1 [defense] of agent2
-        setxy random-xcor random-ycor
+        setxy [xcor] of agent1 [ycor] of agent1
         set energy random-normal 50 20
         set letter-a-count count-letter "a" mating
         recolor-turtle
