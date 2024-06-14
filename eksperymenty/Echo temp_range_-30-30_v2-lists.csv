@@ -1,0 +1,7 @@
+"BehaviorSpace results (NetLogo 6.4.0)","Lists version 2.0"
+"Echo.nlogo"
+"temp_range_-30-30_v2"
+"06/14/2024 12:04:51:616 +0200"
+"min-pxcor","max-pxcor","min-pycor","max-pycor"
+"-200","200","-25","25"
+"[reporter]","[run number]","turtle-speed","mating-selectivity","max-temperature","min-temperature","init-num-creatures","replicate-chance","replenish-speed","mutation-rate","[step]"
