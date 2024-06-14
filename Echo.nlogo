@@ -314,7 +314,7 @@ init-num-creatures
 init-num-creatures
 100
 10000
-5000.0
+2006.0
 1
 1
 NIL
@@ -527,7 +527,7 @@ turtle-speed
 turtle-speed
 10
 100
-15.0
+10.0
 5
 1
 NIL
@@ -1027,6 +1027,116 @@ NetLogo 6.4.0
 @#$#@#$#@
 @#$#@#$#@
 @#$#@#$#@
+<experiments>
+  <experiment name="temp_range_-50-50_v2" repetitions="20" runMetricsEveryStep="true">
+    <setup>setup</setup>
+    <go>go</go>
+    <timeLimit steps="2000"/>
+    <exitCondition>count turtles &gt; 10000</exitCondition>
+    <metric>count turtles with [color = 15]</metric>
+    <metric>count turtles with [color = 45]</metric>
+    <enumeratedValueSet variable="turtle-speed">
+      <value value="10"/>
+      <value value="55"/>
+      <value value="100"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="mating-selectivity">
+      <value value="0"/>
+      <value value="3"/>
+      <value value="5"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="max-temperature">
+      <value value="50"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="min-temperature">
+      <value value="-50"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="init-num-creatures">
+      <value value="2000"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="replicate-chance">
+      <value value="10"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="replenish-speed">
+      <value value="0.5"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="mutation-rate">
+      <value value="10"/>
+    </enumeratedValueSet>
+  </experiment>
+  <experiment name="temp_range_-30-30_v2" repetitions="20" runMetricsEveryStep="true">
+    <setup>setup</setup>
+    <go>go</go>
+    <timeLimit steps="2000"/>
+    <exitCondition>count turtles &gt; 10000</exitCondition>
+    <metric>count turtles with [color = 15]</metric>
+    <metric>count turtles with [color = 45]</metric>
+    <enumeratedValueSet variable="turtle-speed">
+      <value value="10"/>
+      <value value="55"/>
+      <value value="100"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="mating-selectivity">
+      <value value="0"/>
+      <value value="3"/>
+      <value value="5"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="max-temperature">
+      <value value="30"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="min-temperature">
+      <value value="-30"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="init-num-creatures">
+      <value value="2000"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="replicate-chance">
+      <value value="10"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="replenish-speed">
+      <value value="0.5"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="mutation-rate">
+      <value value="10"/>
+    </enumeratedValueSet>
+  </experiment>
+  <experiment name="temp_range_-10-10_v2" repetitions="20" runMetricsEveryStep="true">
+    <setup>setup</setup>
+    <go>go</go>
+    <timeLimit steps="2000"/>
+    <exitCondition>count turtles &gt; 10000</exitCondition>
+    <metric>count turtles with [color = 15]</metric>
+    <metric>count turtles with [color = 45]</metric>
+    <enumeratedValueSet variable="turtle-speed">
+      <value value="10"/>
+      <value value="55"/>
+      <value value="100"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="mating-selectivity">
+      <value value="0"/>
+      <value value="3"/>
+      <value value="5"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="max-temperature">
+      <value value="10"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="min-temperature">
+      <value value="-10"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="init-num-creatures">
+      <value value="2000"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="replicate-chance">
+      <value value="10"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="replenish-speed">
+      <value value="0.5"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="mutation-rate">
+      <value value="10"/>
+    </enumeratedValueSet>
+  </experiment>
+</experiments>
 @#$#@#$#@
 @#$#@#$#@
 default
