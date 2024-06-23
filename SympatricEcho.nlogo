@@ -274,8 +274,15 @@ to-report match-score [tag1 tag2]
   ] tag1 tag2)
 end
 
+; This model was created by Dominik Ciołczyk and Ewa Siedlarczyk for educational purposes
+; by modifying the original Echo model by Uri Wilensky.
 
+; Original Model Information:
 ; Copyright 2005 Uri Wilensky.
+; http://ccl.northwestern.edu/netlogo/models/Echo
+
+; License
+; This model is released under the same license as the original Echo model.
 ; See Info tab for full copyright and license.
 @#$#@#$#@
 GRAPHICS-WINDOW
@@ -586,6 +593,8 @@ count turtles with [tag-color mating = 45]
 11
 
 @#$#@#$#@
+# BELOW IS THE INFORMATION FROM THE ORIGINAL ECHO MODEL BY URI WILENSKY
+
 ## WHAT IS IT?
 
 Echo is a model about the evolution of fitness, adapted from John Holland's book _Hidden Order_ (1995).  It can be used to facilitate experiments in a variety of domains where an agent's fitness varies with its context.  This particular adaptation of Echo  has a biological flavor and refers to the agents as "creatures", and groups of agents with identical mating preferences as "species."
